@@ -1,0 +1,22 @@
+{
+  "short_name": "tokenbridge",
+  "name": "Sovryn Token Bridge",
+  "description": "The Sovryn Token Bridge is the simplest way to transfer ANY ERC20/ERC677/ERC827 token to and from any two EVM chains.",
+  "iconPath": "android-chrome-512x512.png",
+  "icons": [
+    {
+      "src": "android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "android-chrome-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#EEF4FD",
+  "background_color": "#EEF4FD"
+}

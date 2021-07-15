@@ -1,0 +1,19 @@
+{
+  "root": true,
+  "extends": ["airbnb", "prettier"],
+  "parserOptions": {
+    "ecmaVersion": 6,
+    "sourceType": "module"
+  },
+  "plugins": ["simple-import-sort"],
+  "settings": {},
+  "rules": {
+    "import/no-default-export": "error",
+    "import/prefer-default-export": "off",
+    "sort-imports": "off",
+    "import/order": "off",
+    "simple-import-sort/imports": "warn",
+    "simple-import-sort/exports": "warn"
+  },
+  "ignorePatterns": ["packages/subgraph/**"]
+}
