@@ -1,0 +1,25 @@
+---
+- name: Prepare Oracle for ultimate tests
+  hosts: oracle
+  become: true
+  tasks:
+  - name: Connect parity to oracle networks
+    shell: "docker network create {{ item }} && docker network connect {{ item }} parity1 && docker network connect {{ item }} parity2"
+    with_items:
+      - oracle_net_db_bridge_request
+      - oracle_net_db_bridge_collected
+      - oracle_net_db_bridge_affirmation
+      - oracle_net_db_bridge_information
+      - oracle_net_db_bridge_transfer
+      - oracle_net_db_bridge_senderhome
+      - oracle_net_db_bridge_senderforeign
+      - oracle_net_db_bridge_shutdown
+      - oracle_net_rabbit_bridge_request
+      - oracle_net_rabbit_bridge_collected
+      - oracle_net_rabbit_bridge_affirmation
+      - oracle_net_rabbit_bridge_information
+      - oracle_net_rabbit_bridge_transfer
+      - oracle_net_rabbit_bridge_senderhome
+      - oracle_net_rabbit_bridge_senderforeign
+    delegate_to: 127.0.0.1
+    become: false

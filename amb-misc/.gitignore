@@ -1,0 +1,54 @@
+# dependencies
+node_modules
+
+# testing
+coverage
+
+# production
+build
+dist
+
+# misc
+.DS_Store
+*.env*
+!.env.example
+.idea
+.nyc_output
+logs/
+
+
+*.err
+*.out
+data
+
+# contracts build
+ui/src/contracts
+oracle/abis
+monitor/abis
+
+# compiled css
+*.css
+
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+#deployment
+*.retry
+hosts.yml
+hosts
+*.log
+Vagrantfile
+vagrant-hosts.yml
+.vagrant
+deployment/venv
+__pycache__
+
+#monitor
+monitor/responses/*
+monitor/cache/*
+!monitor/cache/.gitkeep
+!monitor/.gitkeep
+
+# Local Netlify folder
+.netlify

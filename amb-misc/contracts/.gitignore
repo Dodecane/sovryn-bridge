@@ -1,0 +1,14 @@
+node_modules
+build
+flats
+.node*
+.idea
+coverage
+*.sublime-*
+.0x-artifacts
+deploy/*.config
+deploy/*.env*
+!deploy/.env.example
+upgrade/*.env*
+!upgrade/.env.example
+.vscode

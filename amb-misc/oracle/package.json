@@ -1,0 +1,56 @@
+{
+  "name": "oracle",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "lint": "eslint . --ignore-path ../.eslintignore",
+    "watcher:signature-request": "./scripts/start-worker.sh watcher signature-request-watcher",
+    "watcher:collected-signatures": "./scripts/start-worker.sh watcher collected-signatures-watcher",
+    "watcher:affirmation-request": "./scripts/start-worker.sh watcher affirmation-request-watcher",
+    "watcher:information-request": "./scripts/start-worker.sh watcher information-request-watcher",
+    "watcher:transfer": "./scripts/start-worker.sh watcher transfer-watcher",
+    "sender:home": "./scripts/start-worker.sh sender home-sender",
+    "sender:foreign": "./scripts/start-worker.sh sender foreign-sender",
+    "confirm:transfer": "./scripts/start-worker.sh confirmRelay transfer-watcher",
+    "confirm:affirmation-request": "./scripts/start-worker.sh confirmRelay affirmation-request-watcher",
+    "confirm:signature-request": "./scripts/start-worker.sh confirmRelay signature-request-watcher",
+    "confirm:collected-signatures": "./scripts/start-worker.sh confirmRelay collected-signatures-watcher",
+    "confirm:information-request": "./scripts/start-worker.sh confirmRelay information-request-watcher",
+    "manager:shutdown": "./scripts/start-worker.sh shutdownManager shutdown-manager",
+    "dev": "concurrently -n 'watcher:signature-request,watcher:collected-signatures,watcher:affirmation-request,watcher:transfer, sender:home,sender:foreign' -c 'red,green,yellow,blue,magenta,cyan' 'yarn watcher:signature-request' 'yarn watcher:collected-signatures' 'yarn watcher:affirmation-request' 'yarn watcher:transfer' 'yarn sender:home' 'yarn sender:foreign'",
+    "test": "NODE_ENV=test mocha",
+    "test:watch": "NODE_ENV=test mocha --watch --reporter=min",
+    "coverage": "NODE_ENV=test nyc --reporter=text --reporter=html mocha",
+    "postinstall": "mkdir -p logs"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "amqp-connection-manager": "^2.0.0",
+    "amqplib": "^0.5.2",
+    "bignumber.js": "^7.2.1",
+    "dotenv": "^5.0.1",
+    "ioredis": "^3.2.2",
+    "node-fetch": "^2.1.2",
+    "pino": "^4.17.3",
+    "pino-pretty": "^2.0.1",
+    "promise-limit": "^2.7.0",
+    "promise-retry": "^1.1.1",
+    "web3": "^1.3.0"
+  },
+  "devDependencies": {
+    "bn-chai": "^1.0.1",
+    "chai": "^4.1.2",
+    "chai-as-promised": "^7.1.1",
+    "concurrently": "^3.6.0",
+    "ndjson": "^1.5.0",
+    "nyc": "^12.0.2",
+    "proxyquire": "^2.0.1",
+    "simple-statistics": "^6.1.0",
+    "sinon": "^6.1.0"
+  },
+  "engines": {
+    "node": ">= 12.22"
+  }
+}

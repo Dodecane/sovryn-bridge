@@ -1,0 +1,10 @@
+rinkeby-rsktestnet:
+  children:
+    oracle:
+      hosts:
+        <node ip>:
+          ansible_user: ubuntu
+          ORACLE_VALIDATOR_ADDRESS_PRIVATE_KEY: '<private key>'
+          ORACLE_HOME_START_BLOCK: <block number>
+          ORACLE_FOREIGN_START_BLOCK: <block number>
+          syslog_server_port: 'udp://<log server and port>'

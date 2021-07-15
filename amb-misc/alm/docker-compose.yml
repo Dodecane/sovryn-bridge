@@ -1,0 +1,14 @@
+---
+version: '2.4'
+services:
+  alm:
+    build:
+      context: ..
+      dockerfile: alm/Dockerfile
+    ports:
+      - "${PORT}:${PORT}"
+    env_file: ./.env
+    environment: 
+      - NODE_ENV=production
+    restart: unless-stopped
+    entrypoint: serve -p ${PORT} -s .

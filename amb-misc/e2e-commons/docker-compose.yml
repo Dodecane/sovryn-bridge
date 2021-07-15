@@ -1,0 +1,106 @@
+version: '3.8'
+networks:
+  ultimate:
+    external: true
+services:
+  parity1:
+    container_name: parity1
+    build: ../parity
+    ports:
+    - "8541:8545"
+    networks:
+      - ultimate
+  parity2:
+    container_name: parity2
+    build:
+      context: ../parity
+      dockerfile: Dockerfile-foreign
+    ports:
+    - "8542:8545"
+    networks:
+      - ultimate
+  redis:
+    image: "redis:4"
+    networks:
+      - ultimate
+  rabbit:
+    image: "rabbitmq:3-management"
+    networks:
+      - ultimate
+  oracle-erc20-native:
+    image: ${DOCKER_IMAGE_BASE:-tokenbridge}/tokenbridge-e2e-oracle:${ORACLE_TAG:-local}
+    env_file: ../e2e-commons/components-envs/oracle-erc20-native.env
+    environment:
+    - NODE_ENV=production
+    command: "true"
+    volumes:
+      - '../e2e-commons/access-lists/block_list.txt:/mono/oracle/access-lists/block_list.txt'
+      - '../e2e-commons/access-lists/allowance_list.txt:/mono/oracle/access-lists/allowance_list.txt'
+    networks:
+      - ultimate
+  oracle-amb:
+    image: ${DOCKER_IMAGE_BASE:-tokenbridge}/tokenbridge-e2e-oracle:${ORACLE_TAG:-local}
+    build:
+      context: ..
+      dockerfile: oracle/Dockerfile
+    env_file: ../e2e-commons/components-envs/oracle-amb.env
+    environment:
+    - NODE_ENV=production
+    command: "true"
+    volumes:
+      - '../e2e-commons/access-lists/block_list.txt:/mono/oracle/access-lists/block_list.txt'
+      - '../e2e-commons/access-lists/allowance_list.txt:/mono/oracle/access-lists/allowance_list.txt'
+    networks:
+      - ultimate
+  alm:
+    image: ${DOCKER_IMAGE_BASE:-tokenbridge}/tokenbridge-e2e-alm:${ALM_TAG:-local}
+    build:
+      context: ..
+      dockerfile: alm/Dockerfile
+      args:
+        DOT_ENV_PATH: e2e-commons/components-envs/alm.env
+    command: "true"
+    networks:
+      - ultimate
+  monitor-erc20-native:
+    image: ${DOCKER_IMAGE_BASE:-tokenbridge}/tokenbridge-e2e-monitor:${MONITOR_TAG:-local}
+    env_file: ../e2e-commons/components-envs/monitor-erc20-native.env
+    entrypoint: yarn check-and-start
+    ports:
+      - "3012:3012"
+    networks:
+      - ultimate
+  monitor-amb:
+    image: ${DOCKER_IMAGE_BASE:-tokenbridge}/tokenbridge-e2e-monitor:${MONITOR_TAG:-local}
+    build:
+      context: ..
+      dockerfile: monitor/Dockerfile
+    env_file: ../e2e-commons/components-envs/monitor-amb.env
+    entrypoint: yarn check-and-start
+    ports:
+      - "3013:3013"
+    networks:
+      - ultimate
+  e2e:
+    image: ${DOCKER_IMAGE_BASE:-tokenbridge}/tokenbridge-e2e-e2e:${E2E_TAG:-local}
+    build:
+      context: ..
+      dockerfile: Dockerfile.e2e
+    command: "true"
+    networks:
+      - ultimate
+  blocks:
+    image: ${DOCKER_IMAGE_BASE:-tokenbridge}/tokenbridge-e2e-e2e:${E2E_TAG:-local}
+    entrypoint: node e2e-commons/scripts/blocks.js
+    networks:
+      - ultimate
+  molecule_runner:
+    image: ${DOCKER_IMAGE_BASE:-tokenbridge}/tokenbridge-e2e-molecule_runner:${MOLECULE_RUNNER_TAG:-local}
+    build:
+      context: ..
+      dockerfile: deployment-e2e/Dockerfile
+    restart: 'no'
+    privileged: true
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ..:/mono
