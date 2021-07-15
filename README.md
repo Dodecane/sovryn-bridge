@@ -13,7 +13,7 @@ More documentation can be found in corresponding directories.
 
 ## Presentation & Video Demo
 
-- [Link to presentation](temp)
+- [Link to presentation](https://github.com/Dodecane/sovryn-bridge/blob/main/Sovryn%20Token%20Bridge%20Presentation.pdf)
 - [Link to video demo](https://www.youtube.com/watch?v=87PVCjS0KB4)
 
 ## Live deployments
